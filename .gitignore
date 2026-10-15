@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+data
+.env
+.env.*
+*.local
+.DS_Store
+omc-brand-assets.zip
+omc-website-previews.zip
+omc-animation-effects-assets.zip
+omc-brand-assets/
+omc-website-previews/
+omc-animation-effects-assets/
