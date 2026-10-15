@@ -14,6 +14,12 @@
   --header: 76px;
   --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
   --body: Inter, "Segoe UI", sans-serif;
+  --hero-face: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
+  --story-face: Fraunces, Georgia, "Times New Roman", serif;
+  --token-face: "Space Grotesk", Inter, sans-serif;
+  --figure-face: "IBM Plex Mono", ui-monospace, monospace;
+  --step-face: Outfit, Inter, sans-serif;
+  --community-face: "Bricolage Grotesque", Inter, sans-serif;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   color-scheme: dark;
 }
@@ -262,6 +268,14 @@ input {
   align-items: center;
 }
 
+.hero h1 {
+  font-family: var(--hero-face);
+  font-weight: 400;
+  font-size: clamp(4.4rem, 8.4vw, 7.8rem);
+  line-height: 0.8;
+  letter-spacing: 0.02em;
+}
+
 .hero h1 span {
   display: block;
 }
@@ -271,12 +285,22 @@ input {
   max-width: 100%;
   border-bottom: 7px solid var(--green);
   padding-bottom: 2px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
+}
+
+.hero .eyebrow,
+.hero .identity,
+.watching {
+  font-family: var(--hero-face);
+  font-weight: 400;
+  letter-spacing: 0.18em;
 }
 
 .hero .lede {
   margin-top: 22px;
-  font-size: 1.12rem;
+  max-width: 34rem;
+  font-size: 1.16rem;
+  line-height: 1.55;
 }
 
 .actions {
@@ -426,9 +450,10 @@ input {
   margin: 0;
   background: var(--green);
   color: var(--green-deep);
-  font-family: var(--display);
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-family: var(--hero-face);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  font-size: 1.05rem;
   padding: 8px 12px;
   border-radius: 8px;
 }
@@ -493,10 +518,10 @@ input {
   margin: 0;
   padding: 12px 16px;
   text-align: center;
-  font-family: var(--display);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  font-size: clamp(0.95rem, 2.4vw, 1.35rem);
+  font-family: var(--hero-face);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  font-size: clamp(1.15rem, 2.6vw, 1.7rem);
 }
 
 .ticker-track {
@@ -504,10 +529,10 @@ input {
   width: max-content;
   gap: 0;
   padding: 12px 0;
-  font-family: var(--display);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-family: var(--hero-face);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
 }
 
 .ticker-track span {
@@ -621,9 +646,93 @@ input {
 .chart-accent span:nth-child(3) { height: 24px; }
 .chart-accent span:nth-child(4) { height: 48px; }
 
+.story .eyebrow,
 .story h2,
+.story-copy > p,
+.story blockquote,
+.story .micro {
+  font-family: var(--story-face);
+}
+
+.story .eyebrow {
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.story h2 {
+  max-width: 8.2em;
+  font-weight: 700;
+  font-size: clamp(3.3rem, 5.6vw, 5.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  text-transform: none;
+}
+
+.story-copy > p {
+  font-size: 1.24rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.story blockquote {
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.28rem;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.story .micro {
+  font-style: italic;
+  letter-spacing: 0.01em;
+  font-size: 0.95rem;
+  text-transform: none;
+}
+
+.buy .eyebrow,
+.buy h2,
+.buy-head > p,
+.step-kicker,
+.step h3,
+.step p,
+.link-check {
+  font-family: var(--step-face);
+}
+
+.buy .eyebrow {
+  letter-spacing: 0.16em;
+  font-weight: 800;
+}
+
 .buy h2 {
-  max-width: 12ch;
+  max-width: 11em;
+  font-weight: 800;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-transform: none;
+}
+
+.buy-head > p,
+.step p,
+.link-check {
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.step-kicker {
+  font-size: 1.45rem;
+  letter-spacing: 0.02em;
+  font-weight: 800;
+}
+
+.step h3 {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  text-transform: none;
+  font-size: clamp(1.65rem, 2vw, 2.05rem);
 }
 
 .story-copy > p,
@@ -644,10 +753,12 @@ blockquote {
 .story-actions .micro {
   margin: 0;
   color: var(--muted-ink);
-  letter-spacing: 0.08em;
-  font-size: 0.78rem;
-  font-weight: 700;
-  max-width: 16rem;
+  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-style: italic;
+  flex-basis: 100%;
+  max-width: 28rem;
 }
 
 .wipe {
@@ -678,14 +789,47 @@ blockquote {
   color: #fff;
 }
 
+.tokenomics .eyebrow,
+.tokenomics h2,
+.token-copy > p,
+.supply-label,
+.stat p,
+.contract p,
+.network-line {
+  font-family: var(--token-face);
+}
+
+.tokenomics .eyebrow,
+.supply-label,
+.stat p,
+.contract p,
+.network-line {
+  letter-spacing: 0.18em;
+  font-weight: 700;
+}
+
+.tokenomics h2 {
+  font-weight: 700;
+  font-size: clamp(2.7rem, 5vw, 4.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.token-copy > p {
+  font-weight: 500;
+  line-height: 1.5;
+}
+
 .token-copy .supply-hero {
   margin-top: 28px;
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: clamp(3.4rem, 7vw, 5.6rem);
-  line-height: 0.85;
+  font-family: var(--figure-face);
+  font-weight: 600;
+  font-size: clamp(2.5rem, 5.4vw, 4.3rem);
+  line-height: 0.9;
   color: var(--green);
-  letter-spacing: 0.02em;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
 }
 
 .supply-label {
@@ -735,12 +879,14 @@ blockquote {
 .contract strong {
   display: block;
   margin-top: 8px;
-  font-family: var(--display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 0.95;
-  letter-spacing: 0.03em;
+  font-family: var(--figure-face);
+  font-weight: 600;
+  font-size: clamp(1.55rem, 2.8vw, 2.15rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
   color: #fff;
+  font-variant-numeric: tabular-nums;
 }
 
 .stat:nth-child(1) strong,
@@ -751,10 +897,11 @@ blockquote {
 
 .stat small {
   display: block;
-  margin-top: 4px;
+  margin-top: 6px;
   color: #8ea0ae;
-  letter-spacing: 0.08em;
-  font-size: 0.72rem;
+  font-family: var(--figure-face);
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
 }
 
 .contract {
@@ -837,16 +984,17 @@ blockquote {
 
 .step-kicker {
   color: #3d8f22;
-  font-family: var(--display);
+  font-family: var(--step-face);
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
+  font-size: 1.35rem;
   margin-bottom: 18px;
 }
 
 .step h3 {
-  font-size: clamp(1.5rem, 2vw, 1.9rem);
+  font-size: clamp(1.55rem, 2vw, 1.85rem);
   margin: 16px 0 10px;
-  max-width: 12ch;
+  max-width: 11em;
 }
 
 .step p:last-child {
@@ -892,8 +1040,37 @@ blockquote {
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
 }
 
+.community .eyebrow,
+.community h2,
+.community-copy > p,
+.night-chip {
+  font-family: var(--community-face);
+}
+
+.community .eyebrow {
+  letter-spacing: 0.14em;
+  font-weight: 700;
+}
+
+.community h2 {
+  font-weight: 800;
+  font-size: clamp(3.5rem, 6.4vw, 6rem);
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  text-transform: none;
+}
+
 .community-copy > p {
-  font-size: 1.08rem;
+  font-size: 1.22rem;
+  font-weight: 500;
+  line-height: 1.45;
+  max-width: 28rem;
+}
+
+.night-chip {
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  text-transform: none;
 }
 
 .floater {
@@ -1313,7 +1490,12 @@ html.js-motion .wipe.is-in {
 }
 
 @media (max-width: 420px) {
-  h1 { font-size: clamp(2.7rem, 16vw, 3.6rem); }
+  .hero h1 { font-size: clamp(3.5rem, 18vw, 4.6rem); }
+  .story h2,
+  .buy h2,
+  .community h2 { font-size: clamp(2.6rem, 12vw, 3.4rem); }
+  .tokenomics h2 { font-size: clamp(2.3rem, 10vw, 3rem); }
+  .token-copy .supply-hero { font-size: clamp(2rem, 10vw, 2.8rem); }
   .stat-grid { grid-template-columns: 1fr; }
 }
 
