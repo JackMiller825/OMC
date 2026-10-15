@@ -42,9 +42,8 @@
         if (robots) robots.setAttribute('content', 'noindex, nofollow')
       }
       try {
-        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        var seenCountdown = sessionStorage.getItem('omc-candle-countdown') === '1'
-        if (!reduceMotion && !seenCountdown && !location.pathname.endsWith('/dashboard')) {
+        var seenCountdown = sessionStorage.getItem('omc-candle-countdown-v2') === '1'
+        if (!seenCountdown && !location.pathname.endsWith('/dashboard')) {
           var narrow = window.matchMedia('(max-width: 760px)').matches
           document.documentElement.classList.add(narrow ? 'hero-reveal-simple' : 'hero-countdown')
         }

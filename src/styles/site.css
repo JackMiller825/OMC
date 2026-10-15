@@ -436,33 +436,49 @@ input {
 .countdown {
   display: none;
   position: absolute;
-  z-index: 4;
-  left: 22px;
-  bottom: 24px;
+  z-index: 5;
+  left: 50%;
+  bottom: 8%;
+  transform: translateX(-50%);
   align-items: flex-end;
-  gap: 8px;
+  gap: 18px;
   pointer-events: none;
 }
 
 .count-candle {
   display: block;
-  width: 16px;
-  height: 48px;
-  border-radius: 3px 3px 1px 1px;
-  transform: scaleY(0.35);
+  position: relative;
+  width: 30px;
+  height: 128px;
+  border-radius: 5px 5px 2px 2px;
+  transform: scaleY(0.06);
   transform-origin: 50% 100%;
-  opacity: 0.28;
+  opacity: 0.12;
+  box-shadow: 0 0 0 transparent;
 }
 
-.count-candle-tall { height: 68px; }
-.count-candle-green { height: 92px; }
+.count-candle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -16px;
+  width: 16px;
+  height: 22px;
+  border-radius: 50% 50% 46% 46%;
+  background: radial-gradient(circle at 50% 70%, #fff4c8, #ffb347 55%, transparent 72%);
+  opacity: 0;
+  transform: translateX(-50%) scale(0.2);
+}
+
+.count-candle-tall { height: 176px; }
+.count-candle-green { height: 220px; }
 
 .count-candle-red {
-  background: linear-gradient(180deg, #e7a099, #9a403c 70%);
+  background: linear-gradient(180deg, #ffd0c8, #c45248 42%, #6e2422 100%);
 }
 
 .count-candle-green {
-  background: linear-gradient(180deg, #e7ffb0, #3ea326 68%);
+  background: linear-gradient(180deg, #f3ffc4, #7dff4a 38%, #1f7a12 100%);
 }
 
 .ticker {
@@ -970,6 +986,7 @@ blockquote {
   html:not(.hero-countdown):not(.hero-reveal-simple) .float {
     animation: hero-float 5.6s ease-in-out infinite alternate;
   }
+}
 
   html.hero-countdown .countdown {
     display: flex;
@@ -979,19 +996,37 @@ blockquote {
     animation: candle-light 420ms var(--ease) forwards;
   }
 
-  html.hero-countdown .count-candle:nth-child(2) { animation-delay: 480ms; }
+  html.hero-countdown .count-candle::after {
+    animation: wick-light 420ms var(--ease) forwards;
+  }
+
+  html.hero-countdown .count-candle:nth-child(2),
+  html.hero-countdown .count-candle:nth-child(2)::after { animation-delay: 480ms; }
   html.hero-countdown .count-candle-green {
+    animation-name: candle-light-green;
     animation-delay: 960ms;
   }
+  html.hero-countdown .count-candle-green::after { animation-delay: 960ms; }
 
   html.hero-countdown .hero-entrance {
     animation: hero-push 2.4s var(--ease) forwards;
   }
 
+  html.hero-countdown .hero-stage::before,
+  html.hero-reveal-simple .hero-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: rgba(9, 18, 29, 0.82);
+    animation: scrim-lift 820ms var(--ease) 980ms forwards;
+  }
+
   html.hero-countdown .depth-trader .float,
   html.hero-reveal-simple .depth-trader .float {
-    opacity: 0.46;
-    filter: brightness(0.62) saturate(0.72);
+    opacity: 0.18;
+    filter: brightness(0.22) saturate(0.45);
     animation: face-reveal 820ms var(--ease) 980ms forwards;
   }
 
@@ -1005,18 +1040,24 @@ blockquote {
   html.hero-reveal-simple .hero-stage::after {
     content: "";
     position: absolute;
-    inset: 8%;
-    z-index: 0;
+    inset: 0;
+    z-index: 2;
     pointer-events: none;
     border-radius: inherit;
-    background: radial-gradient(circle at 58% 42%, rgba(168, 255, 88, 0.02), transparent 58%);
+    background: radial-gradient(circle at 58% 48%, rgba(168, 255, 88, 0), transparent 62%);
     animation: glow-bloom 820ms var(--ease) 980ms forwards;
   }
 
   html.hero-countdown .hero-copy,
   html.hero-countdown .watching {
-    opacity: 0.58;
+    opacity: 0.34;
     animation: copy-reveal 600ms var(--ease) 1.8s forwards;
+  }
+
+  html.hero-reveal-simple .hero-stage::before {
+    background: rgba(9, 18, 29, 0.62);
+    animation-delay: 180ms;
+    animation-duration: 700ms;
   }
 
   html.hero-reveal-simple .depth-trader .float {
@@ -1036,6 +1077,7 @@ blockquote {
     animation: copy-reveal 500ms var(--ease) 520ms forwards;
   }
 
+@media (prefers-reduced-motion: no-preference) {
   .ticker-track {
     animation: marquee 36s linear infinite;
   }
@@ -1131,7 +1173,27 @@ html.js-motion .wipe.is-in {
 }
 
 @keyframes candle-light {
-  to { opacity: 1; transform: scaleY(1); }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+    box-shadow: 0 0 28px rgba(255, 186, 120, 0.55);
+  }
+}
+
+@keyframes candle-light-green {
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+    box-shadow: 0 0 48px rgba(168, 255, 88, 0.9);
+  }
+}
+
+@keyframes wick-light {
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+@keyframes scrim-lift {
+  to { opacity: 0; }
 }
 
 @keyframes face-reveal {
@@ -1143,7 +1205,7 @@ html.js-motion .wipe.is-in {
 }
 
 @keyframes glow-bloom {
-  to { background: radial-gradient(circle at 58% 42%, rgba(168, 255, 88, 0.34), transparent 62%); }
+  to { background: radial-gradient(circle at 58% 48%, rgba(168, 255, 88, 0.55), transparent 58%); }
 }
 
 @keyframes copy-reveal {
@@ -1275,16 +1337,28 @@ html.js-motion .wipe.is-in {
   .ticker-track { display: none; }
   .ticker-static { display: block; }
   .omc-candle-scene.is-live .omc-candle-stack { animation: none; }
+  html.hero-countdown .countdown { display: flex !important; }
+  html.hero-countdown .count-candle { animation: candle-light 420ms var(--ease) forwards !important; }
+  html.hero-countdown .count-candle::after { animation: wick-light 420ms var(--ease) forwards !important; }
+  html.hero-countdown .count-candle:nth-child(2),
+  html.hero-countdown .count-candle:nth-child(2)::after { animation-delay: 480ms !important; }
+  html.hero-countdown .count-candle-green { animation-name: candle-light-green !important; animation-delay: 960ms !important; }
+  html.hero-countdown .count-candle-green::after { animation-delay: 960ms !important; }
+  html.hero-countdown .hero-entrance { animation: hero-push 2.4s var(--ease) forwards !important; }
+  html.hero-countdown .hero-stage::before,
+  html.hero-reveal-simple .hero-stage::before { animation: scrim-lift 820ms var(--ease) 980ms forwards !important; }
   html.hero-countdown .depth-trader .float,
-  html.hero-countdown .hero-copy,
-  html.hero-countdown .watching,
+  html.hero-reveal-simple .depth-trader .float { animation: face-reveal 820ms var(--ease) 980ms forwards !important; }
   html.hero-countdown .depth-glow,
+  html.hero-reveal-simple .depth-glow { animation: glow-spread 820ms var(--ease) 980ms forwards !important; }
+  html.hero-countdown .hero-stage::after,
+  html.hero-reveal-simple .hero-stage::after { animation: glow-bloom 820ms var(--ease) 980ms forwards !important; }
+  html.hero-countdown .hero-copy,
+  html.hero-countdown .watching { animation: copy-reveal 600ms var(--ease) 1.8s forwards !important; }
+  html.hero-reveal-simple .hero-stage::before { animation-delay: 180ms !important; animation-duration: 700ms !important; }
   html.hero-reveal-simple .depth-trader .float,
+  html.hero-reveal-simple .depth-glow,
+  html.hero-reveal-simple .hero-stage::after { animation-delay: 180ms !important; animation-duration: 700ms !important; }
   html.hero-reveal-simple .hero-copy,
-  html.hero-reveal-simple .watching,
-  html.hero-reveal-simple .depth-glow {
-    opacity: 1 !important;
-    filter: none !important;
-  }
-  .countdown { display: none !important; }
+  html.hero-reveal-simple .watching { animation: copy-reveal 500ms var(--ease) 520ms forwards !important; }
 }

@@ -21,12 +21,12 @@ export function HeroSection() {
     const done = () => {
       root.classList.remove('hero-countdown', 'hero-reveal-simple')
       try {
-        sessionStorage.setItem('omc-candle-countdown', '1')
+        sessionStorage.setItem('omc-candle-countdown-v2', '1')
       } catch {
         /* Session storage can be blocked; the hero still finishes in the lit state. */
       }
     }
-    const timer = window.setTimeout(done, countdown ? 2400 : 1200)
+    const timer = window.setTimeout(done, countdown ? 2600 : 1400)
     return () => window.clearTimeout(timer)
   }, [])
 
