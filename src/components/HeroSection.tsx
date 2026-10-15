@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { asset } from '../config/token.ts'
 import { layerShift, useHeroMotion } from '../hooks/useHeroMotion.ts'
 import { Cutout } from './Cutout.tsx'
@@ -11,6 +12,23 @@ const LAYERS = [
 export function HeroSection() {
   const { shift, paused } = useHeroMotion()
   const rotation = Math.max(-1.5, Math.min(1.5, (shift.x / 21.875) * 1.5))
+
+  useEffect(() => {
+    const root = document.documentElement
+    const countdown = root.classList.contains('hero-countdown')
+    const simple = root.classList.contains('hero-reveal-simple')
+    if (!countdown && !simple) return
+    const done = () => {
+      root.classList.remove('hero-countdown', 'hero-reveal-simple')
+      try {
+        sessionStorage.setItem('omc-candle-countdown', '1')
+      } catch {
+        /* Session storage can be blocked; the hero still finishes in the lit state. */
+      }
+    }
+    const timer = window.setTimeout(done, countdown ? 2400 : 1200)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   return (
     <section className="hero" id="home" aria-labelledby="home-title">
@@ -95,6 +113,11 @@ export function HeroSection() {
             </div>
           </div>
           <p className="watching">STILL WATCHING</p>
+          <div className="countdown" aria-hidden="true">
+            <span className="count-candle count-candle-red" />
+            <span className="count-candle count-candle-red count-candle-tall" />
+            <span className="count-candle count-candle-green" />
+          </div>
         </div>
       </div>
     </section>

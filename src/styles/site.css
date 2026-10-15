@@ -385,6 +385,10 @@ input {
   inset: 0;
 }
 
+.hero-entrance {
+  z-index: 1;
+}
+
 .depth {
   pointer-events: none;
   transition: transform 180ms ease;
@@ -427,6 +431,38 @@ input {
   letter-spacing: 0.08em;
   padding: 8px 12px;
   border-radius: 8px;
+}
+
+.countdown {
+  display: none;
+  position: absolute;
+  z-index: 4;
+  left: 22px;
+  bottom: 24px;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.count-candle {
+  display: block;
+  width: 16px;
+  height: 48px;
+  border-radius: 3px 3px 1px 1px;
+  transform: scaleY(0.35);
+  transform-origin: 50% 100%;
+  opacity: 0.28;
+}
+
+.count-candle-tall { height: 68px; }
+.count-candle-green { height: 92px; }
+
+.count-candle-red {
+  background: linear-gradient(180deg, #e7a099, #9a403c 70%);
+}
+
+.count-candle-green {
+  background: linear-gradient(180deg, #e7ffb0, #3ea326 68%);
 }
 
 .ticker {
@@ -931,12 +967,73 @@ blockquote {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-entrance {
-    animation: hero-in 820ms var(--ease) both;
+  html:not(.hero-countdown):not(.hero-reveal-simple) .float {
+    animation: hero-float 5.6s ease-in-out infinite alternate;
   }
 
-  .float {
-    animation: hero-float 5.6s ease-in-out infinite alternate;
+  html.hero-countdown .countdown {
+    display: flex;
+  }
+
+  html.hero-countdown .count-candle {
+    animation: candle-light 420ms var(--ease) forwards;
+  }
+
+  html.hero-countdown .count-candle:nth-child(2) { animation-delay: 480ms; }
+  html.hero-countdown .count-candle-green {
+    animation-delay: 960ms;
+  }
+
+  html.hero-countdown .hero-entrance {
+    animation: hero-push 2.4s var(--ease) forwards;
+  }
+
+  html.hero-countdown .depth-trader .float,
+  html.hero-reveal-simple .depth-trader .float {
+    opacity: 0.46;
+    filter: brightness(0.62) saturate(0.72);
+    animation: face-reveal 820ms var(--ease) 980ms forwards;
+  }
+
+  html.hero-countdown .depth-glow,
+  html.hero-reveal-simple .depth-glow {
+    opacity: 0;
+    animation: glow-spread 820ms var(--ease) 980ms forwards;
+  }
+
+  html.hero-countdown .hero-stage::after,
+  html.hero-reveal-simple .hero-stage::after {
+    content: "";
+    position: absolute;
+    inset: 8%;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(circle at 58% 42%, rgba(168, 255, 88, 0.02), transparent 58%);
+    animation: glow-bloom 820ms var(--ease) 980ms forwards;
+  }
+
+  html.hero-countdown .hero-copy,
+  html.hero-countdown .watching {
+    opacity: 0.58;
+    animation: copy-reveal 600ms var(--ease) 1.8s forwards;
+  }
+
+  html.hero-reveal-simple .depth-trader .float {
+    animation-delay: 180ms;
+    animation-duration: 700ms;
+  }
+
+  html.hero-reveal-simple .depth-glow,
+  html.hero-reveal-simple .hero-stage::after {
+    animation-delay: 180ms;
+    animation-duration: 700ms;
+  }
+
+  html.hero-reveal-simple .hero-copy,
+  html.hero-reveal-simple .watching {
+    opacity: 0.72;
+    animation: copy-reveal 500ms var(--ease) 520ms forwards;
   }
 
   .ticker-track {
@@ -1028,9 +1125,29 @@ html.js-motion .wipe.is-in {
   box-shadow: 6px 9px 0 #17202a;
 }
 
-@keyframes hero-in {
-  from { opacity: 0; transform: translateY(22px) scale(0.98); }
-  to { opacity: 1; transform: none; }
+@keyframes hero-push {
+  from { transform: scale(0.985); }
+  to { transform: none; }
+}
+
+@keyframes candle-light {
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes face-reveal {
+  to { opacity: 1; filter: brightness(1) saturate(1); }
+}
+
+@keyframes glow-spread {
+  to { opacity: 0.8; }
+}
+
+@keyframes glow-bloom {
+  to { background: radial-gradient(circle at 58% 42%, rgba(168, 255, 88, 0.34), transparent 62%); }
+}
+
+@keyframes copy-reveal {
+  to { opacity: 1; }
 }
 
 @keyframes hero-float {
@@ -1158,4 +1275,16 @@ html.js-motion .wipe.is-in {
   .ticker-track { display: none; }
   .ticker-static { display: block; }
   .omc-candle-scene.is-live .omc-candle-stack { animation: none; }
+  html.hero-countdown .depth-trader .float,
+  html.hero-countdown .hero-copy,
+  html.hero-countdown .watching,
+  html.hero-countdown .depth-glow,
+  html.hero-reveal-simple .depth-trader .float,
+  html.hero-reveal-simple .hero-copy,
+  html.hero-reveal-simple .watching,
+  html.hero-reveal-simple .depth-glow {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+  .countdown { display: none !important; }
 }
